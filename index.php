@@ -7,6 +7,18 @@ Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 $app->response->headers->set('Content-Type', 'application/json');
 
+$sql_inicial = "CREATE TABLE IF NOT EXISTS operacao (
+  `codigo` varchar(10) NOT NULL,
+  `tipo_mercadoria` varchar(50) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `preco` float NOT NULL,
+  `tipo_operacao` int(11) NOT NULL,
+  `data_operacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+$query_inicial = @mysql_query($sql_inicial);
+
 $app->get("/operacao/listar", function () use ($app) {
 	
 	$operacoes = array();
